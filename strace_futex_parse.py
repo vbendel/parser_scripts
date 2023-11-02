@@ -65,7 +65,8 @@ def futex_wait_finish(pid, ts):
         for p in waiters:
             print(f"   {p:10d} : {waiters[p]} [{ts-waiters[p]}]")
         print("======================================================")
-    print(f"    Associated futex_wake was called {ts-futex_last_wake[futex_addr]} ago.")
+    if futex_addr in futex_last_wake:
+        print(f"    Associated futex_wake was called {ts-futex_last_wake[futex_addr]} ago.")
     
 
         
@@ -113,7 +114,7 @@ def futex_wake(futex_addr, pid, ts):
     held_futexes = pid_holders[pid]
     if len(held_futexes) > 0:
         print("    Still holds futexes: ")
-        print("            futex : aquire time")
+        print("                 futex : aquire time")
         for f in held_futexes:
             print(f"        {f} : {held_futexes[f]}")
 
