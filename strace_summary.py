@@ -10,7 +10,7 @@ SYSCALL_STATS = {}
 
 
 def parse_syscall_name(line):
-    match = re.search('(.*)\(', line)
+    match = re.search('(.*)\\(', line)
     if match:
         return f"{match.group(1)}"
     else:
