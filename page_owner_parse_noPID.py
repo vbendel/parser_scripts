@@ -2,6 +2,10 @@ import re
 import sys
 
 
+def get_function_name(bt_line):
+    return re.search(r"(\w+)+", bt_line).group(1)
+
+
 def get_module_name(bt_line):
     match = re.search(r"\[(\w+)\]", bt_line)
     if match:
@@ -29,8 +33,11 @@ def count_allocation_backtrace_pairs(filename):
                 # Extract the backtrace until an empty line is encountered
                 module = ""
                 while j < len(lines) and lines[j].strip() != "":
-                    backtrace += lines[j].strip().split(' ')[1].split('+')[0]
-                    module = get_module_name(lines[j].strip())
+                    try:
+                        backtrace += get_function_name(lines[j].strip())
+                        module = get_module_name(lines[j].strip())
+                    except IndexError:
+                        print(f"ERROR: Index error in backtrace parsing on line: {lines[j]}")
                     if module != "":
                         backtrace += f"--[{module}] "
                     else:
