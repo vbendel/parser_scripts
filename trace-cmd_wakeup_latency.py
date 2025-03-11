@@ -22,7 +22,7 @@ def get_pid(pid, comm):
     if pid not in pid_stat:
         pid_stat[pid] = {}
         pid_stat[pid]["comm"] = comm
-        pid_stat[pid]["state"] = "sleep"
+        pid_stat[pid]["state"] = "S"
         pid_stat[pid]["wakeups"] = {"time": 0, "cnt": 0, "max": 0, "max_ts": 0}
         pid_stat[pid]["runtime"] = {"accounted": 0, "real": 0}
         pid_stat[pid]["last_wakeup_ts"] = 0
